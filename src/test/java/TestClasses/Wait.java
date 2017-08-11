@@ -13,8 +13,8 @@ public class Wait {
 
     public static void waitToLoad(WebDriver wD, final String css) {
         org.openqa.selenium.support.ui.Wait<WebDriver> wait = new FluentWait<WebDriver>(wD)
-                .withTimeout(10, TimeUnit.SECONDS)
-                .pollingEvery(100, TimeUnit.MILLISECONDS)
+                .withTimeout(15, TimeUnit.SECONDS)
+                .pollingEvery(1000, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
         WebElement foo = wait.until(new Function<WebDriver, WebElement>() {

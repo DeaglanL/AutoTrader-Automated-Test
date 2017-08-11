@@ -14,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class Tests {
 
@@ -45,7 +46,8 @@ public class Tests {
     @BeforeClass
     public static void beforeClass()
     {
-        webDriver = new ChromeDriver(chromeOptions);
+
+        chromeOptions.addArguments("--start-maximized");
 
         report = new ExtentReports();
         ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter(reportFilePath);
@@ -64,6 +66,8 @@ public class Tests {
         test9 = report.createTest("Add A Name");
         test10 = report.createTest("Add A Name");
 
+
+        webDriver = new ChromeDriver(chromeOptions);
     }
 
     @Before
@@ -72,6 +76,11 @@ public class Tests {
         //initialize pages
         homePage = PageFactory.initElements(webDriver, HomePage.class);
         signInPage = PageFactory.initElements(webDriver, SignInPage.class);
+
+
+
+
+
 
     }
 
@@ -105,19 +114,54 @@ public class Tests {
 
     }
     @Test
-    public void Test2()
+    public void logOut()
     {
-        test2.fail("");
-        Assert.fail("Not implemented");
-    }
+        homePage.open(webDriver);
 
-    @Test
-    public void Test3()
-    {
+        homePage.hoverOverAccIcon(webDriver);
+
+        homePage.clickSignOut(webDriver);
+
+        assertFalse("not signed out", homePage.isSignButtonThere());
+
+        if (homePage.isSignButtonThere())
+            test3.fail("Not signed out");
+        else
+            test3.pass("Signed out");
+
+
+
+
         test3.fail("");
         Assert.fail("Not implemented");
     }
+    @Test
+    public void Register()
+    {
+        homePage.open(webDriver);
+        test2.log(Status.INFO, "Page opened");
 
+        homePage.clickSignin(webDriver);
+        test2.log(Status.INFO, "Sign in button clicked");
+
+        signInPage.clickSignUpTab(webDriver);
+
+        signInPage.enterSignUpEmail(webDriver, "Amax@hotmail.co.uk");
+        test3.log(Status.INFO, "email entered: " + "Amax@hotmail.com");
+
+        signInPage.enterSignUpPass(webDriver, "a123456789");
+        test4.log(Status.INFO, "password entered: " + "a123456789");
+
+        signInPage.clickSignUpButton();
+
+        assertEquals("Sign up failed", webDriver.getCurrentUrl(), "http://www.autotrader.co.uk/");
+
+        if (webDriver.getCurrentUrl().equals("http://www.autotrader.co.uk/"))
+            test2.pass("Sign up successful");
+        else
+            test2.fail("Sign up failed");
+
+    }
     @Test
     public void Test4()
     {
@@ -158,7 +202,7 @@ public class Tests {
         Assert.fail("Not implemented");
     }
     @Test
-    public void Test10()
+    public void Test2()
     {
         test10.fail("");
         Assert.fail("Not implemented");
@@ -172,13 +216,15 @@ public class Tests {
     @After
     public void afterTest()
     {
-        webDriver.quit();
+
 
     }
 
     @AfterClass
     public static void afterClass()
     {
+        webDriver.quit();
+
         report.flush();
 
     }

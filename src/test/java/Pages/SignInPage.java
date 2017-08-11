@@ -17,6 +17,18 @@ public class SignInPage {
     @FindBy(css = "#signInSubmit")
     private WebElement signInButton;
 
+    @FindBy(css = "#js-social__signup-tab span:nth-child(1)")
+    private  WebElement signUpTab;
+
+    @FindBy(css = "#email")
+    private WebElement signUpEmail;
+
+    @FindBy(css = "#password")
+    private WebElement signUpPass;
+
+    @FindBy(css = "#social--signup--submit")
+    private WebElement signUpButton;
+
     public void enterEmail(WebDriver wD, String input)
     {
         Wait.waitToLoad(wD, "#signin-email");
@@ -34,6 +46,32 @@ public class SignInPage {
     public void clickSignIn()
     {
         signInButton.click();
+    }
+
+    public void clickSignUpTab(WebDriver wD)
+    {
+        Wait.waitToLoad(wD, "#js-social__signup-tab span:nth-child(1)");
+
+        signUpTab.click();
+    }
+
+    public void enterSignUpEmail(WebDriver wD, String input)
+    {
+        Wait.waitToLoad(wD, "#email");
+
+        signUpEmail.sendKeys(input);
+    }
+
+    public void enterSignUpPass(WebDriver wD, String input)
+    {
+        Wait.waitToLoad(wD, "#password");
+
+        signUpPass.sendKeys(input);
+    }
+
+    public void clickSignUpButton()
+    {
+        signUpButton.click();
     }
 
 }
