@@ -23,6 +23,9 @@ public class HomePage {
     @FindBy(css = ".footer__nav-searches ul:nth-child(2) li:nth-child(1) a:nth-child(1)")
     private WebElement makeAndModel;
 
+    @FindBy(css = ".products__nav a:nth-child(3) span:nth-child(4)")
+    private WebElement finace;
+
     public void open(WebDriver wD)
     {
         wD.navigate().to("http://www.autotrader.co.uk/");
@@ -74,5 +77,18 @@ public class HomePage {
 
         makeAndModel.click();
 
+    }
+
+    public void moveToAndClickFinace(WebDriver wD)
+    {
+        Wait.waitToLoad(wD, ".products__nav a:nth-child(3) span:nth-child(4)");
+
+        Actions a = new Actions(wD);
+
+        a.moveToElement(finace);
+
+        Wait.waitToLoad(wD,".products__nav a:nth-child(3) span:nth-child(4)");
+
+        finace.click();
     }
 }

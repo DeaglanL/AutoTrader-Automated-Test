@@ -1,6 +1,7 @@
 package TestClasses;
 
 import Pages.BrowseMakeAndModel;
+import Pages.Finance;
 import Pages.HomePage;
 import Pages.SignInPage;
 import com.aventstack.extentreports.ExtentReports;
@@ -43,6 +44,7 @@ public class Tests {
     private HomePage homePage;
     private SignInPage signInPage;
     private BrowseMakeAndModel makeAndMod;
+    private Finance finance;
 
 
 
@@ -64,7 +66,7 @@ public class Tests {
         test3 = report.createTest("Log out");
         test4 = report.createTest("Used Car Quick Search Nissan");
         test5 = report.createTest("New Car Quick Search ");
-        test6 = report.createTest("Add A Name");
+        test6 = report.createTest("Finance calculator");
         test7 = report.createTest("Add A Name");
         test8 = report.createTest("Add A Name");
         test9 = report.createTest("Add A Name");
@@ -81,6 +83,7 @@ public class Tests {
         homePage = PageFactory.initElements(webDriver, HomePage.class);
         signInPage = PageFactory.initElements(webDriver, SignInPage.class);
         makeAndMod = PageFactory.initElements(webDriver, BrowseMakeAndModel.class);
+        finance = PageFactory.initElements(webDriver,Finance.class);
 
 
 
@@ -203,10 +206,23 @@ public class Tests {
     }
 
     @Test
-    public void Test6()
+    public void financeCalculator()
     {
-        test6.fail("");
-        Assert.fail("Not implemented");
+        homePage.open(webDriver);
+
+        homePage.moveToAndClickMakeAndModel(webDriver);
+
+        finance.moveSlider1ToMax(webDriver);
+
+        finance.moveSlider2ToMin(webDriver);
+
+        assertTrue("incorrect amount calculated", finance.getSumText().contains("2,185.42") );
+
+        if (finance.getSumText().contains("2,185.42"))
+            test6.pass("correct amount displayed");
+        else
+            test6.fail("Incorrect text displayed");
+
     }
 
     @Test
