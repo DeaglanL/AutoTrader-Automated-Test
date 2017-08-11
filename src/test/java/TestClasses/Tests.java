@@ -1,5 +1,6 @@
 package TestClasses;
 
+import Pages.BrowseMakeAndModel;
 import Pages.HomePage;
 import Pages.SignInPage;
 import com.aventstack.extentreports.ExtentReports;
@@ -8,6 +9,7 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 import org.junit.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class Tests {
 
@@ -39,6 +42,7 @@ public class Tests {
     //Pages
     private HomePage homePage;
     private SignInPage signInPage;
+    private BrowseMakeAndModel makeAndMod;
 
 
 
@@ -58,7 +62,7 @@ public class Tests {
         test1 = report.createTest("SignIn");
         test2 = report.createTest("Register");
         test3 = report.createTest("Log out");
-        test4 = report.createTest("Add A Name");
+        test4 = report.createTest("Quick Search Test");
         test5 = report.createTest("Add A Name");
         test6 = report.createTest("Add A Name");
         test7 = report.createTest("Add A Name");
@@ -76,6 +80,8 @@ public class Tests {
         //initialize pages
         homePage = PageFactory.initElements(webDriver, HomePage.class);
         signInPage = PageFactory.initElements(webDriver, SignInPage.class);
+        makeAndMod = PageFactory.initElements(webDriver, BrowseMakeAndModel.class);
+
 
 
 
@@ -87,9 +93,6 @@ public class Tests {
     @Test
     public void SignIn()
     {
-        //Cmax@hotmail.com
-        //a123456789
-
         homePage.open(webDriver);
         test1.log(Status.INFO, "Page opened");
 
@@ -163,11 +166,24 @@ public class Tests {
 
     }
     @Test
-    public void Test4()
-    {
-        test4.fail("");
-        Assert.fail("Not implemented");
+    public void QuickSearchTest() {
+        homePage.open(webDriver);
+
+        homePage.moveToAndClickMakeAndModel(webDriver);
+
+        makeAndMod.clickOnUsedNissan(webDriver);
+
+        assertTrue("first search result is not nissan", webDriver.findElement(By.cssSelector("tr.seo-record:nth-child(2) > td:nth-child(2) > a:nth-child(1)")).getText().toLowerCase().contains("nissan"));
+
+        if(webDriver.findElement(By.cssSelector("tr.seo-record:nth-child(2) > td:nth-child(2) > a:nth-child(1)")).getText().toLowerCase().contains("nissan"))
+            test4.pass("Nissan Found");
+        else
+            test4.fail("top result is not nissan");
+
+
     }
+
+
 
     @Test
     public void Test5()

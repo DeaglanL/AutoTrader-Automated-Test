@@ -17,6 +17,12 @@ public class HomePage {
     @FindBy(css = "button.test-header__sub-nav-link")
     private WebElement signOutButton;
 
+    @FindBy(css = ".footer__nav-native a:nth-child(1)")
+    private WebElement IphoneApp;
+
+    @FindBy(css = ".footer__nav-searches ul:nth-child(2) li:nth-child(1) a:nth-child(1)")
+    private WebElement makeAndModel;
+
     public void open(WebDriver wD)
     {
         wD.navigate().to("http://www.autotrader.co.uk/");
@@ -48,5 +54,25 @@ public class HomePage {
         Wait.waitToBeVisble(wD, "button.test-header__sub-nav-link");
 
         signOutButton.click();
+    }
+
+    public void clickIphoneAppLink(WebDriver wD)
+    {
+        Wait.waitToLoad(wD, ".footer__nav-native a:nth-child(1)");
+
+        IphoneApp.click();
+    }
+
+    public void moveToAndClickMakeAndModel(WebDriver wD)
+    {
+        Wait.waitToLoad(wD, ".footer__nav-searches ul:nth-child(2) li:nth-child(1) a:nth-child(1)");
+        Actions a =  new Actions(wD);
+
+        a.moveToElement(makeAndModel).perform();
+
+        Wait.waitToBeVisble(wD, ".footer__nav-searches ul:nth-child(2) li:nth-child(1) a:nth-child(1)");
+
+        makeAndModel.click();
+
     }
 }
