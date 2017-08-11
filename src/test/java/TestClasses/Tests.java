@@ -62,8 +62,8 @@ public class Tests {
         test1 = report.createTest("SignIn");
         test2 = report.createTest("Register");
         test3 = report.createTest("Log out");
-        test4 = report.createTest("Quick Search Test");
-        test5 = report.createTest("Add A Name");
+        test4 = report.createTest("Used Car Quick Search Nissan");
+        test5 = report.createTest("New Car Quick Search ");
         test6 = report.createTest("Add A Name");
         test7 = report.createTest("Add A Name");
         test8 = report.createTest("Add A Name");
@@ -173,7 +173,7 @@ public class Tests {
 
         makeAndMod.clickOnUsedNissan(webDriver);
 
-        assertTrue("first search result is not nissan", webDriver.findElement(By.cssSelector("tr.seo-record:nth-child(2) > td:nth-child(2) > a:nth-child(1)")).getText().toLowerCase().contains("nissan"));
+        assertTrue("first search result is not nissan", webDriver.findElement(By.cssSelector("tr.seo-record:nth-child(2) > td:nth-child(2) > a:nth-child(1)")).getText().contains("Nissan"));
 
         if(webDriver.findElement(By.cssSelector("tr.seo-record:nth-child(2) > td:nth-child(2) > a:nth-child(1)")).getText().toLowerCase().contains("nissan"))
             test4.pass("Nissan Found");
@@ -186,10 +186,20 @@ public class Tests {
 
 
     @Test
-    public void Test5()
+    public void newCarQuickSearch()
     {
-        test5.fail("");
-        Assert.fail("Not implemented");
+        homePage.open(webDriver);
+
+        homePage.moveToAndClickMakeAndModel(webDriver);
+
+        makeAndMod.clickOnNewTesla(webDriver);
+
+        assertTrue("Vechicle is not a tesla", webDriver.findElement(By.cssSelector("#bf5dd4c8f6cb890c641c2ffc33e58971 > a:nth-child(1) > div:nth-child(2) > p:nth-child(1")).getText().contains("Tesla"));
+
+        if (webDriver.findElement(By.cssSelector("#bf5dd4c8f6cb890c641c2ffc33e58971 > a:nth-child(1) > div:nth-child(2) > p:nth-child(1")).getText().contains("Tesla"))
+            test5.pass("Tesla found");
+        else
+            test5.fail("Tesla not found");
     }
 
     @Test
